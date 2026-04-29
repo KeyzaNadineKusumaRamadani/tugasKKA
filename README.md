@@ -1,101 +1,38 @@
-📊 Laporan Praktikum Data Analysis (RFM & Sales Analysis)
+📊 Analisis Data Penjualan & Efektivitas Iklan
+Business Question
+Analisis ini dilakukan untuk memahami performa penjualan dan perilaku pelanggan. Beberapa pertanyaan utama yang ingin dijawab:
+- Siapa pelanggan terbaik berdasarkan pola transaksi?
+- Apakah anggaran iklan berpengaruh terhadap penjualan?
+- Kategori produk mana yang paling efisien?
+- Produk mana yang memiliki performa rendah?
 
-🧠 Business Question
+Data Wrangling
+Data diolah dari file penjualan yang berisi informasi transaksi, produk, dan anggaran iklan.
+Beberapa proses yang dilakukan:
+- Mengubah kolom Order_Date ke format datetime
+- Membuat kolom Total_Sales dari Quantity × Price_Per_Unit
+- Membagi data menjadi dua kelompok:
+       Iklan tinggi dan rendah berdasarkan median Ad_Budget
+- Melakukan analisis RFM (Recency, Frequency, Monetary) untuk segmentasi pelanggan
+- Menghitung efisiensi kategori produk dengan rasio:
+       Efficiency = Total Sales / Ad Budget
 
-- Analisis ini bertujuan untuk menjawab beberapa pertanyaan bisnis utama:
-- Siapa pelanggan terbaik berdasarkan perilaku pembelian (RFM)?
-- Faktor apa yang paling mempengaruhi total penjualan?
-- Bagaimana tren penjualan setiap bulan?
-- Apakah harga (UnitPrice) berpengaruh terhadap total penjualan?
+Insights
+📌 Pengaruh Anggaran Iklan terhadap Penjualan
 
-🧹 Data Wrangling
+Rata-rata penjualan antara kelompok iklan tinggi dan rendah tidak menunjukkan perbedaan yang signifikan. Selisihnya sangat kecil, sehingga dapat disimpulkan bahwa peningkatan anggaran iklan tidak secara langsung meningkatkan penjualan.
+<img width="856" height="556" alt="download" src="https://github.com/user-attachments/assets/a3ee0547-3540-4dd0-8d48-791c1239dcf4" />
 
-Beberapa proses pembersihan dan transformasi data yang dilakukan:
-- Mengubah kolom InvoiceDate menjadi format datetime
-- Membuat kolom baru:
+📌 Efisiensi Kategori Produk
 
-month → untuk analisis bulanan
-total_sales → hasil dari:
-total_sales = Quantity × UnitPrice
-Menghapus/menghindari nilai kosong (missing value)
-- Melakukan agregasi data:
-     Penjualan per bulan
-     Penjualan per customer (RFM)
-- Membuat fitur RFM:
-     Recency → terakhir belanja
-     Frequency → jumlah transaksi
-     Monetary → total pengeluaran
-- Scoring RFM menggunakan pd.qcut menjadi 1–5
+Kategori Fashion memiliki efisiensi tertinggi, menunjukkan bahwa biaya iklan yang dikeluarkan menghasilkan penjualan yang optimal. Sebaliknya, Home Decor memiliki efisiensi paling rendah sehingga kurang efektif dalam penggunaan budget.
+<img width="927" height="556" alt="download (1)" src="https://github.com/user-attachments/assets/87590138-dba6-476d-b02d-96cacac8a87e" />
 
-📊 Insights
-1. Korelasi Antar Variabel
+📌 Distribusi RFM Pelanggan
 
-Dari heatmap:
-Quantity vs Total Sales → 0.89 (Sangat kuat positif)
-👉 Artinya semakin banyak barang dibeli, semakin tinggi penjualan
-UnitPrice vs Total Sales → -0.16 (Lemah negatif)
-👉 Harga tidak terlalu berpengaruh besar ke total penjualan
-Quantity vs UnitPrice → hampir 0
-👉 Jumlah beli tidak dipengaruhi harga secara signifikan
+Sebagian besar pelanggan memiliki frekuensi pembelian rendah dan nilai transaksi yang kecil. Hanya sedikit pelanggan yang tergolong aktif dan memberikan kontribusi besar terhadap total penjualan.
+<img width="701" height="532" alt="download (2)" src="https://github.com/user-attachments/assets/a0c6f670-a593-41c3-95b2-296ed7e5f66b" />
 
-📌 Kesimpulan:
-Penjualan lebih dipengaruhi oleh jumlah barang yang dibeli dibanding harga.
 
-2. Tren Penjualan Bulanan
-- Penjualan cenderung stabil di awal tahun
-- Terjadi kenaikan signifikan di bulan September–November
-- Puncak penjualan terjadi di November
-- Penurunan drastis di Desember (kemungkinan data belum lengkap)
 
-📌 Kesimpulan:
-Ada pola musiman (seasonality), kemungkinan karena event akhir tahun / promo.
 
-3. Analisis RFM (Customer Behavior)
-- Customer dengan:
-       Recency kecil → baru belanja → lebih bernilai
-       Frequency tinggi → sering beli → loyal
-       Monetary tinggi → banyak belanja → high value
-- Digabung menjadi RFM Score (contoh: 555 = pelanggan terbaik)
-
-📌 Kesimpulan:
-Perusahaan bisa mengelompokkan customer:
-- VIP / loyal customer
-- Customer biasa
-- Customer yang sudah tidak aktif
-
-🚀 Recommendation
-
-Berdasarkan analisis:
-
-1. Fokus ke Quantity (Jumlah Pembelian)
-- Buat promo seperti:
-     "Beli 2 gratis 1"
-      Diskon pembelian banyak
-- Karena quantity paling berpengaruh ke sales
-
-2. Manfaatkan Momentum Bulan Tinggi
-- Maksimalkan penjualan di:
-       September – November
-- Strategi:
-       Campaign besar
-       Flash sale
-Promo akhir tahun
-
-3. Segmentasi Customer (RFM)
-- Targetkan:
-      High RFM → kasih reward / loyalty program
-      Low RFM → re-engagement (diskon, email marketing)
-
-4. Harga Bukan Faktor Utama
-- Tidak perlu terlalu fokus menurunkan harga
-- Lebih baik:
-        Tingkatkan bundling produk
-        Tambahkan value (bonus, paket hemat)
-
-📌 Kesimpulan Akhir
-- Faktor utama penjualan adalah jumlah barang (Quantity)
-- Ada pola musiman dalam penjualan
-- RFM efektif untuk mengidentifikasi pelanggan terbaik
-- Strategi bisnis harus fokus pada:
-        meningkatkan volume pembelian
-        mempertahankan pelanggan loyal
